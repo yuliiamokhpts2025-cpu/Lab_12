@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-using namespace std;
 
 const int MAX_HISTORY = 100;
 
@@ -12,9 +11,9 @@ struct Date {
 };
 
 struct Record {
-    Date date1;
-    Date date2;
-    string result;
+    Date   date1;
+    Date   date2;
+    std::string result;
 };
 
 extern Date   date1;
