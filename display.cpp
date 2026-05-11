@@ -1,29 +1,33 @@
 #include "display.h"
 #include "date.h"
 #include <iostream>
-#include <cstdio>
+#include <iomanip>
 using namespace std;
 
-void displayResult() {
-    int  cmp;
-    char d1buf[9], d2buf[9];
+void printDate(const Date& d) {
+    if (d.day   < 10) cout << "0";
+    cout << d.day << ":";
+    if (d.month < 10) cout << "0";
+    cout << d.month << ":";
+    if (d.year  < 10) cout << "0";
+    cout << d.year;
+}
 
+void displayResult() {
+    int cmp;
     cmp = compareDate(date1, date2);
 
-    sprintf(d1buf, "%02d:%02d:%02d", date1.day, date1.month, date1.year);
-    sprintf(d2buf, "%02d:%02d:%02d", date2.day, date2.month, date2.year);
-
-    if      (cmp == 0) strcpy(history[historyCount].result, "Дати рівні");
-    else if (cmp <  0) strcpy(history[historyCount].result, "Перша передує другій");
-    else               strcpy(history[historyCount].result, "Друга передує першій");
+    if      (cmp == 0) history[historyCount].result = "Дати рівні";
+    else if (cmp <  0) history[historyCount].result = "Перша передує другій";
+    else               history[historyCount].result = "Друга передує першій";
 
     cout << "\nДати у хронологічному порядку:\n";
     if (cmp <= 0) {
-        cout << "1. " << d1buf << "\n";
-        cout << "2. " << d2buf << "\n";
+        cout << "1. "; printDate(date1); cout << "\n";
+        cout << "2. "; printDate(date2); cout << "\n";
     } else {
-        cout << "1. " << d2buf << "\n";
-        cout << "2. " << d1buf << "\n";
+        cout << "1. "; printDate(date2); cout << "\n";
+        cout << "2. "; printDate(date1); cout << "\n";
     }
     cout << "Результат: " << history[historyCount].result << "\n";
 
@@ -35,8 +39,7 @@ void displayResult() {
 }
 
 void displayTable() {
-    int  i;
-    char d1buf[9], d2buf[9];
+    int i;
 
     if (historyCount == 0) {
         cout << "\nІсторія порівнянь порожня.\n";
@@ -49,17 +52,11 @@ void displayTable() {
     cout << "+-----+----------+----------+----------------------+\n";
 
     for (i = 0; i < historyCount; i++) {
-        sprintf(d1buf, "%02d:%02d:%02d",
-            history[i].date1.day,
-            history[i].date1.month,
-            history[i].date1.year);
-        sprintf(d2buf, "%02d:%02d:%02d",
-            history[i].date2.day,
-            history[i].date2.month,
-            history[i].date2.year);
-
-        printf("| %-3d | %s | %s | %-20s |\n",
-            i + 1, d1buf, d2buf, history[i].result);
+        cout << "| " << setw(3) << left << i + 1 << " | ";
+        printDate(history[i].date1);
+        cout << " | ";
+        printDate(history[i].date2);
+        cout << " | " << setw(20) << left << history[i].result << " |\n";
     }
 
     cout << "+-----+----------+----------+----------------------+\n";
