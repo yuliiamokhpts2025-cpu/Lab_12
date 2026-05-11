@@ -1,8 +1,9 @@
 #pragma once
-#ifndef DATE_H
-#define DATE_H
 
-#define MAX_HISTORY 100
+#include <string>
+using namespace std;
+
+const int MAX_HISTORY = 100;
 
 struct Date {
     int day;
@@ -13,7 +14,7 @@ struct Date {
 struct Record {
     Date date1;
     Date date2;
-    char result[30];
+    string result;
 };
 
 extern Date   date1;
@@ -24,5 +25,3 @@ extern int    historyCount;
 void inputData();
 bool isValidDate(const Date& d);
 int  compareDate(const Date& a, const Date& b);
-
-#endif
